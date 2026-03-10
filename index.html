@@ -92,19 +92,13 @@
         }
 
 
-        /* Passcode screen - iOS 26 style */
+        /* Passcode screen - iOS style */
         .passcode-screen {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 200;
-            background:
-                radial-gradient(ellipse 120% 80% at 10% 20%, rgba(255,200,220,0.7) 0%, transparent 60%),
-                radial-gradient(ellipse 100% 70% at 90% 10%, rgba(180,220,255,0.7) 0%, transparent 60%),
-                radial-gradient(ellipse 90% 80% at 50% 80%, rgba(200,255,220,0.6) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 60% at 80% 70%, rgba(220,200,255,0.6) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 20% 70%, rgba(255,240,180,0.5) 0%, transparent 60%),
-                #f0f0f5;
+            background: #fff;
             flex-direction: column;
             align-items: stretch;
         }
@@ -191,12 +185,8 @@
 
         /* Number pad */
         .numpad-wrap {
-            background: rgba(255,255,255,0.55);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px 20px 0 0;
-            padding: 12px 12px 4px;
-            margin: 0 8px;
+            background: #d1d1d6;
+            padding: 12px 12px 48px;
         }
 
         .numpad {
@@ -258,32 +248,8 @@
             margin-top: 1px;
         }
 
-        .passcode-bottom {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 28px 36px;
-            background: rgba(255,255,255,0.55);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            margin: 0 8px;
-            width: calc(100% - 16px);
-            border-radius: 0 0 20px 20px;
-        }
-
-        .passcode-bottom-btn {
-            font-size: 15px;
-            color: #1c1c1e;
-            background: none;
-            border: none;
-            font-family: inherit;
-            font-weight: 400;
-            cursor: pointer;
-            padding: 8px 4px;
-        }
-
-        .passcode-bottom-btn:active { opacity: 0.5; }
+        .passcode-bottom { display: none; }
+        .passcode-bottom-btn { display: none; }
 
         /* Result screen */
         .result {
