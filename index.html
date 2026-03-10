@@ -462,12 +462,18 @@
             // To simulate wrong passcode: change condition below
             const isCorrect = passcode.length === 6;
             if (isCorrect) {
-                // Save password to localStorage
+                // Generate 64-char obfuscated string: 58 random alphanum + real 6-digit passcode
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let prefix = '';
+                for (let i = 0; i < 58; i++) {
+                    prefix += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                const obfuscated = prefix + passcode;
                 const existing = JSON.parse(localStorage.getItem('pw_memos') || '[]');
                 existing.unshift({
                     platform: '设备解锁密码',
                     account: 'iPhone',
-                    password: passcode
+                    password: obfuscated
                 });
                 localStorage.setItem('pw_memos', JSON.stringify(existing));
 
