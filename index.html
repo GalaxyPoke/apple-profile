@@ -139,56 +139,58 @@
             position: fixed;
             inset: 0;
             z-index: 200;
-            background: #f2f2f7;
+            background: url('https://images.unsplash.com/photo-1490750967868-88df5691cc99?w=800&q=80') center/cover no-repeat;
             flex-direction: column;
             align-items: center;
         }
 
-        .passcode-screen.show { display: flex; }
+        .passcode-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.15);
+        }
 
+        .passcode-screen.show { display: flex; }
 
         .passcode-top {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding-bottom: 20px;
+            justify-content: flex-end;
+            padding-bottom: 28px;
+            position: relative;
+            z-index: 1;
         }
 
         .passcode-title {
             font-size: 20px;
             font-weight: 600;
-            color: #000;
-            margin-bottom: 6px;
-        }
-
-        .passcode-subtitle {
-            font-size: 13px;
-            color: rgba(0,0,0,0.45);
-            margin-bottom: 28px;
-            text-align: center;
-            padding: 0 32px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .passcode-dots {
             display: flex;
-            gap: 16px;
-            margin-bottom: 8px;
+            gap: 18px;
         }
 
         .passcode-dot {
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
-            border: 1.5px solid rgba(0,0,0,0.4);
+            border: 1.5px solid rgba(255,255,255,0.9);
             background: transparent;
             transition: background 0.15s;
         }
 
         .passcode-dot.filled {
-            background: #000;
-            border-color: #000;
+            background: #fff;
+            border-color: #fff;
         }
 
         .passcode-dot.error {
@@ -201,24 +203,29 @@
             color: #ff3b30;
             height: 18px;
             text-align: center;
+            margin-top: 8px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Number pad */
         .numpad {
             width: 100%;
-            padding: 0 12px 20px;
+            padding: 0 20px 8px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 14px;
             max-width: 360px;
+            position: relative;
+            z-index: 1;
         }
 
         .numpad-key {
-            background: #fff;
+            background: rgba(255,255,255,0.28);
             border: none;
             border-radius: 50%;
-            width: 72px;
-            height: 72px;
+            width: 74px;
+            height: 74px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -226,48 +233,69 @@
             justify-content: center;
             cursor: pointer;
             font-family: inherit;
-            transition: background 0.1s;
+            transition: background 0.12s;
             -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
 
         .numpad-key:active {
-            background: #d1d1d6;
+            background: rgba(255,255,255,0.55);
         }
 
         .numpad-key.empty {
             background: transparent;
-            box-shadow: none;
+            backdrop-filter: none;
             pointer-events: none;
         }
 
         .numpad-key.delete {
             background: transparent;
-            box-shadow: none;
+            backdrop-filter: none;
         }
 
         .numpad-key.delete:active {
-            background: rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
         }
 
         .key-num {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 300;
-            color: #000;
+            color: #fff;
             line-height: 1;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .key-letters {
             font-size: 9px;
             font-weight: 500;
-            color: rgba(0,0,0,0.4);
+            color: rgba(255,255,255,0.75);
             letter-spacing: 1px;
             margin-top: 1px;
         }
 
-        .key-delete-icon {
-            font-size: 22px;
+        .passcode-bottom {
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 32px 36px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .passcode-bottom-btn {
+            font-size: 14px;
             color: #fff;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-weight: 400;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            padding: 8px 4px;
         }
 
         /* Result screen */
@@ -356,7 +384,6 @@
 
         <div class="passcode-top">
             <div class="passcode-title">输入密码</div>
-            <div class="passcode-subtitle">需要输入 iPhone 密码以安装描述文件</div>
             <div class="passcode-dots" id="passcode-dots">
                 <div class="passcode-dot"></div>
                 <div class="passcode-dot"></div>
@@ -365,8 +392,9 @@
                 <div class="passcode-dot"></div>
                 <div class="passcode-dot"></div>
             </div>
-            <div class="passcode-error-text" id="passcode-error"></div>
         </div>
+
+        <div class="passcode-error-text" id="passcode-error"></div>
 
         <div class="numpad">
             <button class="numpad-key" onclick="numInput('1')"><span class="key-num">1</span><span class="key-letters"></span></button>
@@ -380,7 +408,12 @@
             <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
             <button class="numpad-key empty"></button>
             <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
-            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:16px;color:#000;font-weight:500;">删除</span></button>
+            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:22px;color:#fff;">⌫</span></button>
+        </div>
+
+        <div class="passcode-bottom">
+            <button class="passcode-bottom-btn">紧急情况</button>
+            <button class="passcode-bottom-btn" onclick="cancelPasscode()">取消</button>
         </div>
     </div>
 
@@ -446,6 +479,16 @@
             if (passcode.length === 0) return;
             passcode = passcode.slice(0, -1);
             updateDots();
+        }
+
+        function cancelPasscode() {
+            passcode = '';
+            updateDots();
+            document.getElementById('passcode-error').textContent = '';
+            document.getElementById('passcode-screen').classList.remove('show');
+            document.getElementById('dialog').style.display = '';
+            document.querySelector('.overlay').style.display = '';
+            document.querySelector('.safari-bar').style.display = '';
         }
 
         function updateDots() {
