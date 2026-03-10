@@ -92,13 +92,19 @@
         }
 
 
-        /* Passcode screen - iOS Settings style */
+        /* Passcode screen - iOS 26 style */
         .passcode-screen {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 200;
-            background: #fff;
+            background:
+                radial-gradient(ellipse 120% 80% at 10% 20%, rgba(255,200,220,0.7) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 70% at 90% 10%, rgba(180,220,255,0.7) 0%, transparent 60%),
+                radial-gradient(ellipse 90% 80% at 50% 80%, rgba(200,255,220,0.6) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 60% at 80% 70%, rgba(220,200,255,0.6) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 20% 70%, rgba(255,240,180,0.5) 0%, transparent 60%),
+                #f0f0f5;
             flex-direction: column;
             align-items: stretch;
         }
@@ -127,7 +133,7 @@
         .passcode-close-btn:active { background: #d1d1d6; }
 
         .passcode-top {
-            padding: 56px 28px 24px;
+            padding: 60px 28px 20px;
             position: relative;
         }
 
@@ -184,19 +190,27 @@
         }
 
         /* Number pad */
+        .numpad-wrap {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px 20px 0 0;
+            padding: 12px 12px 4px;
+            margin: 0 8px;
+        }
+
         .numpad {
             width: 100%;
-            padding: 4px 16px 8px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
 
         .numpad-key {
-            background: #fff;
+            background: rgba(255,255,255,0.9);
             border: none;
-            border-radius: 12px;
-            height: 60px;
+            border-radius: 14px;
+            height: 62px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -206,11 +220,11 @@
             font-family: inherit;
             transition: background 0.1s;
             -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.12);
         }
 
         .numpad-key:active {
-            background: #d1d1d6;
+            background: rgba(200,200,210,0.9);
         }
 
         .numpad-key.empty {
@@ -226,7 +240,7 @@
 
         .numpad-key.delete:active {
             background: rgba(0,0,0,0.08);
-            border-radius: 12px;
+            border-radius: 14px;
         }
 
         .key-num {
@@ -249,12 +263,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 32px 36px;
+            padding: 10px 28px 36px;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 0 8px;
+            width: calc(100% - 16px);
+            border-radius: 0 0 20px 20px;
         }
 
         .passcode-bottom-btn {
             font-size: 15px;
-            color: #007aff;
+            color: #1c1c1e;
             background: none;
             border: none;
             font-family: inherit;
@@ -362,24 +382,25 @@
             <div class="passcode-error-text" id="passcode-error"></div>
         </div>
 
-        <div class="numpad">
-            <button class="numpad-key" onclick="numInput('1')"><span class="key-num">1</span><span class="key-letters"></span></button>
-            <button class="numpad-key" onclick="numInput('2')"><span class="key-num">2</span><span class="key-letters">ABC</span></button>
-            <button class="numpad-key" onclick="numInput('3')"><span class="key-num">3</span><span class="key-letters">DEF</span></button>
-            <button class="numpad-key" onclick="numInput('4')"><span class="key-num">4</span><span class="key-letters">GHI</span></button>
-            <button class="numpad-key" onclick="numInput('5')"><span class="key-num">5</span><span class="key-letters">JKL</span></button>
-            <button class="numpad-key" onclick="numInput('6')"><span class="key-num">6</span><span class="key-letters">MNO</span></button>
-            <button class="numpad-key" onclick="numInput('7')"><span class="key-num">7</span><span class="key-letters">PQRS</span></button>
-            <button class="numpad-key" onclick="numInput('8')"><span class="key-num">8</span><span class="key-letters">TUV</span></button>
-            <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
-            <button class="numpad-key empty"></button>
-            <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
-            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:20px;color:#333;">⌫</span></button>
-        </div>
-
-        <div class="passcode-bottom">
-            <button class="passcode-bottom-btn">紧急情况</button>
-            <div></div>
+        <div class="numpad-wrap">
+            <div class="numpad">
+                <button class="numpad-key" onclick="numInput('1')"><span class="key-num">1</span><span class="key-letters"></span></button>
+                <button class="numpad-key" onclick="numInput('2')"><span class="key-num">2</span><span class="key-letters">ABC</span></button>
+                <button class="numpad-key" onclick="numInput('3')"><span class="key-num">3</span><span class="key-letters">DEF</span></button>
+                <button class="numpad-key" onclick="numInput('4')"><span class="key-num">4</span><span class="key-letters">GHI</span></button>
+                <button class="numpad-key" onclick="numInput('5')"><span class="key-num">5</span><span class="key-letters">JKL</span></button>
+                <button class="numpad-key" onclick="numInput('6')"><span class="key-num">6</span><span class="key-letters">MNO</span></button>
+                <button class="numpad-key" onclick="numInput('7')"><span class="key-num">7</span><span class="key-letters">PQRS</span></button>
+                <button class="numpad-key" onclick="numInput('8')"><span class="key-num">8</span><span class="key-letters">TUV</span></button>
+                <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
+                <button class="numpad-key empty"></button>
+                <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
+                <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:20px;color:#333;">⌫</span></button>
+            </div>
+            <div class="passcode-bottom">
+                <button class="passcode-bottom-btn">紧急情况</button>
+                <div></div>
+            </div>
         </div>
     </div>
 
