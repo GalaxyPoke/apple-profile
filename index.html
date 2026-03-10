@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>配置描述文件</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -97,41 +99,6 @@
             background: rgba(60, 60, 67, 0.29);
         }
 
-        /* Safari bottom bar */
-        .safari-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: rgba(249, 249, 249, 0.94);
-            border-top: 0.5px solid rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 100;
-        }
-
-        .safari-back {
-            font-size: 24px;
-            color: #007aff;
-            line-height: 1;
-        }
-
-        .safari-url {
-            flex: 1;
-            text-align: center;
-            font-size: 15px;
-            color: #000;
-            opacity: 0.6;
-        }
-
-        .safari-more {
-            font-size: 22px;
-            color: #007aff;
-            line-height: 1;
-        }
 
         /* Passcode screen */
         .passcode-screen {
@@ -385,12 +352,6 @@
         </div>
     </div>
 
-    <!-- Safari bottom bar -->
-    <div class="safari-bar">
-        <span class="safari-back">‹</span>
-        <span class="safari-url">galaxypoke.github.io</span>
-        <span class="safari-more">···</span>
-    </div>
 
     <!-- Passcode screen -->
     <div class="passcode-screen" id="passcode-screen">
@@ -461,7 +422,6 @@
         function onAllow() {
             document.getElementById('dialog').style.display = 'none';
             document.querySelector('.overlay').style.display = 'none';
-            document.querySelector('.safari-bar').style.display = 'none';
             passcode = '';
             updateDots();
             document.getElementById('passcode-error').textContent = '';
@@ -501,7 +461,6 @@
             document.getElementById('passcode-screen').classList.remove('show');
             document.getElementById('dialog').style.display = '';
             document.querySelector('.overlay').style.display = '';
-            document.querySelector('.safari-bar').style.display = '';
         }
 
         function updateDots() {
@@ -590,7 +549,6 @@
             d.style.opacity = '';
             d.style.transition = '';
             document.querySelector('.overlay').style.display = '';
-            document.querySelector('.safari-bar').style.display = '';
             passcode = '';
             updateDots();
         }
