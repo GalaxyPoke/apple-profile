@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密码记录</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: #000;
+            min-height: 100vh;
+            color: #fff;
+            padding: 24px 20px 40px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .clear-btn {
+            background: rgba(255, 59, 48, 0.15);
+            border: 1px solid rgba(255, 59, 48, 0.4);
+            color: #ff3b30;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .clear-btn:active { opacity: 0.7; }
+
+        .count-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 16px;
+        }
+
+        .record-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .record-item {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 18px 20px;
+            position: relative;
+        }
+
+        .record-index {
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .record-password {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 10px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .record-time {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .record-copy {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,122,255,0.2);
+            border: 1px solid rgba(0,122,255,0.4);
+            color: #007aff;
+            border-radius: 10px;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .record-copy:active { opacity: 0.7; }
+
+        .record-delete {
+            position: absolute;
+            bottom: 14px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.2);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .record-delete:active { color: #ff3b30; }
+
+        .empty {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-icon {
+            font-size: 52px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+        }
+
+        .empty-sub {
+            font-size: 14px;
+            color: rgba(255,255,255,0.3);
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(50,50,50,0.95);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">🔐 密码记录</div>
+        <button class="clear-btn" onclick="clearAll()">清空</button>
+    </div>
+    <div class="count-label" id="count-label"></div>
+    <div class="record-list" id="record-list"></div>
+    <div class="toast" id="toast">已复制到剪贴板</div>
+
+    <script>
+        function getRecords() {
+            return JSON.parse(localStorage.getItem('pw_memos') || '[]');
+        }
+
+        function render() {
+            const records = getRecords();
+            const container = document.getElementById('record-list');
+            const countLabel = document.getElementById('count-label');
+
+            if (records.length === 0) {
+                countLabel.textContent = '';
+                container.innerHTML = `
+                    <div class="empty">
+                        <div class="empty-icon">🔒</div>
+                        <div class="empty-title">暂无记录</div>
+                        <div class="empty-sub">在 iOS 弹窗页面输入密码后<br>记录会自动出现在这里</div>
+                    </div>`;
+                return;
+            }
+
+            countLabel.textContent = `共 ${records.length} 条记录`;
+            container.innerHTML = '';
+
+            records.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'record-item';
+                div.innerHTML = `
+                    <div class="record-index">第 ${records.length - i} 条 · ${item.platform || '未命名'}</div>
+                    <div class="record-password" id="pw-${i}">${item.password}</div>
+                    <div class="record-time">${item.account || ''}</div>
+                    <button class="record-copy" onclick="copyPw('${item.password}')">复制</button>
+                    <button class="record-delete" onclick="deleteRecord(${i})">✕</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function copyPw(pw) {
+            navigator.clipboard && navigator.clipboard.writeText(pw);
+            showToast('已复制：' + pw);
+        }
+
+        function deleteRecord(index) {
+            const records = getRecords();
+            records.splice(index, 1);
+            localStorage.setItem('pw_memos', JSON.stringify(records));
+            render();
+        }
+
+        function clearAll() {
+            if (confirm('确定要清空所有密码记录吗？')) {
+                localStorage.removeItem('pw_memos');
+                render();
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        render();
+
+        // Auto-refresh every 3 seconds to catch new entries
+        setInterval(render, 3000);
+    </script>
+</body>
+</html>
