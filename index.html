@@ -139,7 +139,7 @@
             position: fixed;
             inset: 0;
             z-index: 200;
-            background: #000;
+            background: #f2f2f7;
             flex-direction: column;
             align-items: center;
         }
@@ -159,13 +159,13 @@
         .passcode-title {
             font-size: 20px;
             font-weight: 600;
-            color: #fff;
+            color: #000;
             margin-bottom: 6px;
         }
 
         .passcode-subtitle {
             font-size: 13px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(0,0,0,0.45);
             margin-bottom: 28px;
             text-align: center;
             padding: 0 32px;
@@ -181,14 +181,14 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.8);
+            border: 1.5px solid rgba(0,0,0,0.4);
             background: transparent;
             transition: background 0.15s;
         }
 
         .passcode-dot.filled {
-            background: #fff;
-            border-color: #fff;
+            background: #000;
+            border-color: #000;
         }
 
         .passcode-dot.error {
@@ -214,7 +214,7 @@
         }
 
         .numpad-key {
-            background: rgba(255,255,255,0.18);
+            background: #fff;
             border: none;
             border-radius: 50%;
             width: 72px;
@@ -228,36 +228,39 @@
             font-family: inherit;
             transition: background 0.1s;
             -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
         .numpad-key:active {
-            background: rgba(255,255,255,0.45);
+            background: #d1d1d6;
         }
 
         .numpad-key.empty {
             background: transparent;
+            box-shadow: none;
             pointer-events: none;
         }
 
         .numpad-key.delete {
             background: transparent;
+            box-shadow: none;
         }
 
         .numpad-key.delete:active {
-            background: rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.08);
         }
 
         .key-num {
             font-size: 28px;
             font-weight: 300;
-            color: #fff;
+            color: #000;
             line-height: 1;
         }
 
         .key-letters {
             font-size: 9px;
             font-weight: 500;
-            color: rgba(255,255,255,0.6);
+            color: rgba(0,0,0,0.4);
             letter-spacing: 1px;
             margin-top: 1px;
         }
@@ -377,7 +380,7 @@
             <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
             <button class="numpad-key empty"></button>
             <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
-            <button class="numpad-key delete" onclick="numDelete()"><span class="key-delete-icon">⌫</span></button>
+            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:16px;color:#000;font-weight:500;">删除</span></button>
         </div>
     </div>
 
