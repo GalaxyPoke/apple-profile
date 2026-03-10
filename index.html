@@ -346,7 +346,12 @@
         <button class="passcode-close-btn" onclick="cancelPasscode()">✕</button>
 
         <div class="passcode-top">
-            <div class="passcode-lock-icon">🔒</div>
+            <div class="passcode-lock-icon">
+                <svg width="56" height="64" viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 28V20C14 12.268 20.268 6 28 6C35.732 6 42 12.268 42 20V28" stroke="#007aff" stroke-width="4" stroke-linecap="round"/>
+                    <rect x="6" y="28" width="44" height="32" rx="8" stroke="#007aff" stroke-width="4"/>
+                </svg>
+            </div>
             <div class="passcode-title">输入密码</div>
             <div class="passcode-subtitle">输入用于解锁此 iPhone 的密码。</div>
             <div class="passcode-dots" id="passcode-dots">
