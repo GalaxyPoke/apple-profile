@@ -1,0 +1,13 @@
+# Available Tools
+
+## mutunus_bolohufi3
+
+Parameters:
+- summary (required): Put your COMPLETE response here in Markdown format (supports tables, code blocks, lists)
+- reason (optional)
+
+ALWAYS call mutunus_bolohufi3 at the end of EVERY response.
+
+## Format
+
+{"tool": "mutunus_bolohufi3", "arguments": {"summary": "Your full Markdown response here"}}
