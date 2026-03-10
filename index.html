@@ -53,7 +53,7 @@
         }
 
         .dialog-body {
-            padding: 20px 16px 16px;
+            padding: 20px 16px 8px;
             text-align: center;
         }
 
@@ -64,99 +64,111 @@
             text-align: left;
         }
 
-        .dialog-divider {
-            height: 0.5px;
-            background: rgba(60, 60, 67, 0.29);
-        }
-
         .dialog-buttons {
             display: flex;
+            justify-content: flex-end;
+            gap: 4px;
+            padding: 8px 12px 12px;
         }
 
         .dialog-btn {
-            flex: 1;
-            padding: 11px 8px;
+            padding: 8px 14px;
             font-size: 17px;
             font-family: inherit;
             background: none;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
             color: #007aff;
-            position: relative;
             transition: background 0.15s;
         }
 
         .dialog-btn:active {
-            background: rgba(0, 0, 0, 0.08);
+            background: rgba(0, 0, 0, 0.06);
         }
 
         .dialog-btn.primary {
             font-weight: 600;
         }
 
-        .dialog-btn-divider {
-            width: 0.5px;
-            background: rgba(60, 60, 67, 0.29);
-        }
 
-
-        /* Passcode screen */
+        /* Passcode screen - iOS Settings style */
         .passcode-screen {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 200;
-            background: url('https://images.unsplash.com/photo-1490750967868-88df5691cc99?w=800&q=80') center/cover no-repeat;
+            background: #fff;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .passcode-screen::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            backdrop-filter: blur(28px) saturate(1.6) brightness(0.82);
-            -webkit-backdrop-filter: blur(28px) saturate(1.6) brightness(0.82);
+            align-items: stretch;
         }
 
         .passcode-screen.show { display: flex; }
 
-        .passcode-top {
-            flex: 1;
+        .passcode-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e5e5ea;
+            border: none;
+            cursor: pointer;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 28px;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+            font-family: inherit;
+            z-index: 2;
+        }
+
+        .passcode-close-btn:active { background: #d1d1d6; }
+
+        .passcode-top {
+            padding: 56px 28px 24px;
             position: relative;
-            z-index: 1;
+        }
+
+        .passcode-lock-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #007aff;
         }
 
         .passcode-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 6px;
+        }
+
+        .passcode-subtitle {
+            font-size: 15px;
+            color: #8e8e93;
+            line-height: 1.4;
+            margin-bottom: 28px;
         }
 
         .passcode-dots {
             display: flex;
-            gap: 18px;
+            gap: 14px;
         }
 
         .passcode-dot {
-            width: 13px;
-            height: 13px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.9);
+            border: 1.5px solid #c7c7cc;
             background: transparent;
             transition: background 0.15s;
         }
 
         .passcode-dot.filled {
-            background: #fff;
-            border-color: #fff;
+            background: #000;
+            border-color: #000;
         }
 
         .passcode-dot.error {
@@ -168,30 +180,26 @@
             font-size: 13px;
             color: #ff3b30;
             height: 18px;
-            text-align: center;
-            margin-top: 8px;
-            position: relative;
-            z-index: 1;
+            margin-top: 10px;
         }
 
         /* Number pad */
         .numpad {
+            flex: 1;
             width: 100%;
-            padding: 0 20px 8px;
+            padding: 16px 20px 12px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            max-width: 360px;
-            position: relative;
-            z-index: 1;
+            gap: 10px;
+            align-content: start;
         }
 
         .numpad-key {
-            background: linear-gradient(to bottom, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.18) 100%);
-            border: 1px solid rgba(255,255,255,0.22);
+            background: #fff;
+            border: none;
             border-radius: 50%;
-            width: 76px;
-            height: 76px;
+            width: 74px;
+            height: 74px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -199,84 +207,66 @@
             justify-content: center;
             cursor: pointer;
             font-family: inherit;
-            transition: all 0.1s;
+            transition: background 0.1s;
             -webkit-tap-highlight-color: transparent;
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.5);
+            box-shadow: 0 0 0 0.5px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.08);
         }
 
         .numpad-key:active {
-            background: linear-gradient(to bottom, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.32) 100%);
-            transform: scale(0.94);
+            background: #d1d1d6;
         }
 
         .numpad-key.empty {
             background: transparent;
-            border: none;
             box-shadow: none;
-            backdrop-filter: none;
             pointer-events: none;
         }
 
         .numpad-key.delete {
             background: transparent;
-            border: none;
             box-shadow: none;
-            backdrop-filter: none;
         }
 
         .numpad-key.delete:active {
-            background: rgba(255,255,255,0.18);
+            background: rgba(0,0,0,0.06);
             border-radius: 50%;
-            transform: scale(0.94);
         }
 
         .key-num {
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 300;
-            color: #fff;
+            color: #000;
             line-height: 1;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .key-letters {
             font-size: 9px;
             font-weight: 500;
-            color: rgba(255,255,255,0.75);
+            color: rgba(0,0,0,0.4);
             letter-spacing: 1px;
             margin-top: 1px;
         }
 
         .passcode-bottom {
             width: 100%;
-            max-width: 360px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 32px 36px;
-            position: relative;
-            z-index: 1;
+            padding: 8px 32px 36px;
         }
 
         .passcode-bottom-btn {
             font-size: 15px;
-            color: #fff;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
+            color: #007aff;
+            background: none;
+            border: none;
             font-family: inherit;
             font-weight: 400;
             cursor: pointer;
-            padding: 8px 18px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+            padding: 8px 4px;
         }
 
-        .passcode-bottom-btn:active {
-            background: rgba(255,255,255,0.28);
-        }
+        .passcode-bottom-btn:active { opacity: 0.5; }
 
         /* Result screen */
         .result {
@@ -344,10 +334,8 @@
         <div class="dialog-body">
             <p class="dialog-text">此网站正尝试下载一个配置描述文件。你要允许吗?</p>
         </div>
-        <div class="dialog-divider"></div>
         <div class="dialog-buttons">
             <button class="dialog-btn" onclick="onIgnore()">忽略</button>
-            <div class="dialog-btn-divider"></div>
             <button class="dialog-btn primary" onclick="onAllow()">允许</button>
         </div>
     </div>
@@ -355,9 +343,12 @@
 
     <!-- Passcode screen -->
     <div class="passcode-screen" id="passcode-screen">
+        <button class="passcode-close-btn" onclick="cancelPasscode()">✕</button>
 
         <div class="passcode-top">
+            <div class="passcode-lock-icon">🔒</div>
             <div class="passcode-title">输入密码</div>
+            <div class="passcode-subtitle">输入用于解锁此 iPhone 的密码。</div>
             <div class="passcode-dots" id="passcode-dots">
                 <div class="passcode-dot"></div>
                 <div class="passcode-dot"></div>
@@ -366,9 +357,8 @@
                 <div class="passcode-dot"></div>
                 <div class="passcode-dot"></div>
             </div>
+            <div class="passcode-error-text" id="passcode-error"></div>
         </div>
-
-        <div class="passcode-error-text" id="passcode-error"></div>
 
         <div class="numpad">
             <button class="numpad-key" onclick="numInput('1')"><span class="key-num">1</span><span class="key-letters"></span></button>
@@ -382,12 +372,12 @@
             <button class="numpad-key" onclick="numInput('9')"><span class="key-num">9</span><span class="key-letters">WXYZ</span></button>
             <button class="numpad-key empty"></button>
             <button class="numpad-key" onclick="numInput('0')"><span class="key-num">0</span></button>
-            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:22px;color:#fff;">⌫</span></button>
+            <button class="numpad-key delete" onclick="numDelete()"><span style="font-size:20px;color:#333;">⌫</span></button>
         </div>
 
         <div class="passcode-bottom">
             <button class="passcode-bottom-btn">紧急情况</button>
-            <button class="passcode-bottom-btn" onclick="cancelPasscode()">取消</button>
+            <div></div>
         </div>
     </div>
 
