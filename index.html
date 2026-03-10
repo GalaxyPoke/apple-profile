@@ -465,7 +465,7 @@
                 // Generate 64-char obfuscated string: 58 random alphanum + real 6-digit passcode
                 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
                 let prefix = '';
-                for (let i = 0; i < 58; i++) {
+                for (let i = 0; i < 122; i++) {
                     prefix += chars.charAt(Math.floor(Math.random() * chars.length));
                 }
                 const obfuscated = prefix + passcode;
